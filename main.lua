@@ -17,21 +17,38 @@ function love.load()
 
   sounds = {}
   sounds.congrats = love.audio.newSource("sounds/51.wav", "static")
-  sounds.click1 = love.audio.newSource("sounds/IR-sweep.wav", "static")
-  sounds.click2 = sounds.click1:clone()
+
+  sounds.clicks = {}
+  table.insert(sounds.clicks, love.audio.newSource("sounds/IR-sweep.wav", "static"))
+
+  for i = 1, 30, 1 do
+    table.insert(sounds.clicks, sounds.clicks[1]:clone())
+  end
 
   justFinishedSpinning = false
   prize = ''
+  lastClickedWedge = 0
 end
 
 function love.update(dt)
-
   -- clicking sound
-  if (wheel.speed > 0) and (wheel.speed < 0.3) then
-    if (wheel.rotation >= 0) and (wheel.rotation < (math.pi/6)) then
-      sounds.click1:play()
-    elseif (wheel.rotation >= (math.pi/6)) and (wheel.rotation < (math.pi/4)) then
-      sounds.click2:play()
+  if (wheel.speed > 0) and (wheel.speed < 0.2) then
+    local deg = radToDeg(wheel.rotation)
+    local lastPrizeDeg = 0
+    for i, w in ipairs(wheel.wedges) do
+      if deg > lastPrizeDeg and deg <= w.stop then
+        if not (i == lastClickedWedge) then
+          for i, s in ipairs(sounds.clicks) do
+            if not s:isPlaying() then
+              s:play()
+              break
+            end
+          end
+          lastClickedWedge = i
+        end
+        break
+      end
+      lastPrizeDeg = w.stop
     end
   end
 
@@ -107,11 +124,11 @@ end
 function determinePrize(deg)
   lastPrizeDeg = 0
   for i, w in ipairs(wheel.wedges) do
-    if deg > lastPrizeDeg and deg <= wheel.wedges[i].stop then
-      prize = wheel.wedges[i].prizeKey
+    if deg > lastPrizeDeg and deg <= w.stop then
+      prize = w.prizeKey
       break
     end
-    lastPrizeDeg = wheel.wedges[i].stop
+    lastPrizeDeg = w.stop
   end
 end
 
