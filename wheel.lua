@@ -10,10 +10,10 @@ wheel.defaultAcceleration = 1
 wheel.acceleration = wheel.defaultAcceleration
 wheel.defaultSpeed = 0
 wheel.idleSpeed = 0.002
-wheel.maxSpeed = 3.333
+wheel.maxSpeed = 15.0
 wheel.speed = wheel.defaultSpeed
 wheel.speedDecay = .98
-wheel.maxSpeed = 3
+wheel.speedDecayFast = .5
 
 wheel.wedges = {
   { stop = 15.0, prizeKey = 'hardcover' },
