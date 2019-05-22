@@ -108,9 +108,6 @@ function love.draw()
 end
 
 function love.keypressed(k)
-  if gameState == 2 then
-    idleTime = 0 -- reset idle time
-  end
   if k == 'escape' then
      love.event.quit()
   elseif k == 'home' and gameState == 2 then
@@ -119,6 +116,9 @@ function love.keypressed(k)
 end
 
 function love.mousepressed( x, y, button, istouch, presses )
+  if gameState == 2 then
+    idleTime = 0 -- reset idle time
+  end
   if (button == 1) and (gameState == 1) then
     startGame()
   end
