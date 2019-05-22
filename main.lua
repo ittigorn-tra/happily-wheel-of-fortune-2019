@@ -49,7 +49,7 @@ function love.update(dt)
 
   -- if game is in session
   if gameState == 2 then
-    if love.keyboard.isDown('space') then
+    if love.mouse.isDown(1) then
       if wheel.speed <= 0.1 then
         wheel.speed = math.random(3,5)/10
         justFinishedSpinning = true
@@ -114,10 +114,14 @@ function love.keypressed(k)
   end
   if k == 'escape' then
      love.event.quit()
-  elseif k == 'return' and gameState == 1 then
-    startGame()
   elseif k == 'home' and gameState == 2 then
     enterIdleState()
+  end
+end
+
+function love.mousepressed( x, y, button, istouch, presses )
+  if (button == 1) and (gameState == 1) then
+    startGame()
   end
 end
 
