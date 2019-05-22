@@ -3,8 +3,6 @@ require('./prizes')
 wheel = {}
 wheel.x = love.graphics.getWidth()/2
 wheel.y = love.graphics.getHeight()/2
-wheel.scaleX = .6
-wheel.scaleY = .6
 wheel.rotation = 0
 wheel.defaultAcceleration = 1
 wheel.acceleration = wheel.defaultAcceleration

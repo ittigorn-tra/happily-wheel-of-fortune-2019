@@ -13,7 +13,7 @@ function love.load()
   prize = ''
   lastClickedWedge = 0
 
-  love.window.setMode( 1920, 1000, {fullscreen=true} )
+  love.window.setMode( 1920, 1080, {fullscreen=true,display=1} )
 
   require('./wheel')
   -- moonshine = require 'moonshine'
@@ -88,15 +88,14 @@ function love.update(dt)
 end -- end love.update
 
 function love.draw()
-  love.graphics.draw(bg)
-  -- love.graphics.draw(sprites.shadow, wheel.x, wheel.y, nil, wheel.scaleX, wheel.scaleY, sprites.shadow:getWidth()/2, sprites.shadow:getWidth()/2)
-  love.graphics.draw(sprites.wheel, wheel.x, wheel.y, wheel.rotation, wheel.scaleX, wheel.scaleY, sprites.wheel:getWidth()/2, sprites.wheel:getWidth()/2)
+  love.graphics.draw(bg, 0, 0, 0, love.graphics.getWidth()/bg:getWidth(), love.graphics.getHeight()/bg:getHeight())
+  love.graphics.draw(sprites.wheel, wheel.x, wheel.y, wheel.rotation, (love.graphics.getHeight()*.8)/sprites.wheel:getHeight(), nil, sprites.wheel:getWidth()/2, sprites.wheel:getWidth()/2)
   
   -- effect.draw(function()
   --   love.graphics.draw(sprites.wheel, wheel.x, wheel.y, wheel.rotation, wheel.scaleX, wheel.scaleY, sprites.wheel:getWidth()/2, sprites.wheel:getWidth()/2)
   -- end)
 
-  love.graphics.draw(sprites.wheelHub, wheel.x, wheel.y, (3*math.pi)/2, nil, nil, sprites.wheelHub:getWidth()/2, sprites.wheelHub:getWidth()/2)
+  love.graphics.draw(sprites.wheelHub, wheel.x, wheel.y, (3*math.pi)/2, (love.graphics.getHeight()*.25)/sprites.wheelHub:getHeight(), nil, sprites.wheelHub:getWidth()/2, sprites.wheelHub:getWidth()/2)
 
   -- debug messages
   if debugMode then
