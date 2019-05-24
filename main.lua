@@ -7,30 +7,32 @@ function love.load()
 
   debugMode = true
   gameState = 1
-  idleTime = 0
-  triggerIdleMode = 10.0
-  justFinishedSpinning = false
+  gameStateTimeout = 10.0
+  justSpun = false
+  showPrizeTimer = 0
+  showPrizeTimeout = 10
+  showPrize = false
   prize = ''
   lastClickedWedge = 0
 
-  love.window.setMode( 1920, 1080, {fullscreen=true,display=1} )
+  -- love.window.setMode( 1920, 1080, {fullscreen=true,display=1} )
+  love.window.setMode( love.graphics.getWidth(), love.graphics.getHeight(), {fullscreen=true,display=1} )
 
   require('./wheel')
-  -- moonshine = require 'moonshine'
-  -- effect = moonshine(moonshine.effects.boxblur)
-  -- effect.boxblur.radius = {0,0}
 
   -- graphics
-  bg = love.graphics.newImage('sprites/bg.png')
+  bg = {}
+  table.insert(bg, love.graphics.newImage('sprites/shadow.png'))
+  table.insert(bg, love.graphics.newImage('sprites/bg.png'))
+  table.insert(bg, love.graphics.newImage('sprites/wheel-hub.png'))
+
   sprites = {}
   sprites.wheel = love.graphics.newImage('sprites/wheel.png')
-  sprites.wheelHub = love.graphics.newImage('sprites/wheel-hub.png')
-  sprites.shadow = love.graphics.newImage('sprites/shadow-wheel.png')
 
   -- sounds
   sounds = {}
   sounds.congrats = love.audio.newSource("sounds/51.wav", "static")
-  sounds.clicks = loadClicks()
+  sounds.clicks = loadClickingSound()
   
 end
 
@@ -52,7 +54,7 @@ function love.update(dt)
     if love.mouse.isDown(1) then
       if wheel.speed <= 0.1 then
         wheel.speed = math.random(3,5)/10
-        justFinishedSpinning = true
+        justSpun = true
       end
       if wheel.speed < wheel.maxSpeed then
         wheel.acceleration = wheel.acceleration * 1.00025
@@ -70,40 +72,45 @@ function love.update(dt)
         end
       else
         wheel.speed = wheel.defaultSpeed
-        if justFinishedSpinning then
-          sounds.congrats:play()
-          determinePrize(radToDeg(wheel.rotation))
-          justFinishedSpinning = false
+        if justSpun then
+          gameState = 3
+          -- sounds.congrats:play()
+          -- determinePrize(radToDeg(wheel.rotation))
+          -- justSpun = false
         end
       end
+    end
+  -- if game is in show prize state
+  elseif gameState == 3 then
+    showPrizeTimer = showPrizeTimer + dt
+    if justSpun then
+      sounds.congrats:play()
+      determinePrize(radToDeg(wheel.rotation))
+      showPrize = true
+      justSpun = false
+    elseif showPrizeTimer >= showPrizeTimeout then
+      enterIdleState()
     end
   -- if game is idle
   else
     wheel.speed = wheel.idleSpeed
   end
   
-  -- update idle time
-  checkIdling(dt)
-
 end -- end love.update
 
 function love.draw()
-  love.graphics.draw(bg, 0, 0, 0, love.graphics.getWidth()/bg:getWidth(), love.graphics.getHeight()/bg:getHeight())
-  love.graphics.draw(sprites.wheel, wheel.x, wheel.y, wheel.rotation, (love.graphics.getHeight()*.8)/sprites.wheel:getHeight(), nil, sprites.wheel:getWidth()/2, sprites.wheel:getWidth()/2)
-  
-  -- effect.draw(function()
-  --   love.graphics.draw(sprites.wheel, wheel.x, wheel.y, wheel.rotation, wheel.scaleX, wheel.scaleY, sprites.wheel:getWidth()/2, sprites.wheel:getWidth()/2)
-  -- end)
-
-  love.graphics.draw(sprites.wheelHub, wheel.x, wheel.y, (3*math.pi)/2, (love.graphics.getHeight()*.25)/sprites.wheelHub:getHeight(), nil, sprites.wheelHub:getWidth()/2, sprites.wheelHub:getWidth()/2)
+  love.graphics.draw(bg[1], 0, 0, (3*math.pi)/2, love.graphics.getWidth()/bg[1]:getHeight(), nil, bg[1]:getWidth(), nil) -- shadow
+  love.graphics.draw(sprites.wheel, wheel.x, wheel.y, wheel.rotation, love.graphics.getWidth()/sprites.wheel:getHeight(), nil, sprites.wheel:getWidth()/2, sprites.wheel:getWidth()/2)
+  love.graphics.draw(bg[2], 0, 0, (3*math.pi)/2, love.graphics.getWidth()/bg[2]:getHeight(), nil, bg[2]:getWidth(), nil) -- background
+  love.graphics.draw(bg[3], 0, love.graphics.getHeight(), (3*math.pi)/2, love.graphics.getWidth()/sprites.wheel:getWidth(), nil)
 
   -- debug messages
   if debugMode then
     love.graphics.print('Speed: ' ..wheel.speed)
     love.graphics.print('Acc: ' ..wheel.acceleration, 0, 20)
     love.graphics.print('Rotation: ' ..wheel.rotation, 0, 40)
-    love.graphics.print('Price: ' ..prize, 300, 0)
-    love.graphics.print('Idle: ' ..idleTime, 600, 0)
+    love.graphics.print('Prize: ' ..prize, 300, 0)
+    love.graphics.print('Show prize timer: ' ..showPrizeTimer, 600, 0)
   end
 end
 
@@ -116,10 +123,7 @@ function love.keypressed(k)
 end
 
 function love.mousepressed( x, y, button, istouch, presses )
-  if gameState == 2 then
-    idleTime = 0 -- reset idle time
-  end
-  if (button == 1) and (gameState == 1) then
+  if (button == 1) and ((gameState == 1) or (gameState == 3)) then
     startGame()
   end
 end
@@ -139,17 +143,24 @@ function determinePrize(deg)
   end
 end
 
+function resetState()
+  wheel.speed = 0
+  showPrizeTimer = 0
+  showPrize = false
+  prize = ''
+end
+
 function startGame()
   gameState = 2
-  wheel.speed = 0
+  resetState()
 end
 
 function enterIdleState()
   gameState = 1
-  idleTime = 0
+  resetState()
 end
 
-function loadClicks()
+function loadClickingSound()
   local clicks = {}
   table.insert(clicks, love.audio.newSource("sounds/IR-sweep.wav", "static"))
   for i = 1, 30, 1 do
@@ -176,16 +187,6 @@ function click()
         break
       end
       lastPrizeDeg = w.stop
-    end
-  end
-end
-
-function checkIdling(dt)
-  if (gameState == 2) and (wheel.speed == 0) then
-    if idleTime > triggerIdleMode then
-      enterIdleState()
-    else
-      idleTime = idleTime + dt
     end
   end
 end
