@@ -7,10 +7,12 @@ wheel.rotation = 0
 wheel.defaultAcceleration = 1
 wheel.acceleration = wheel.defaultAcceleration
 wheel.defaultSpeed = 0
+wheel.addJumpStartSpeed = 0.1
+wheel.cutOffSpeed = 0.00002
 wheel.idleSpeed = 0.002
 wheel.maxSpeed = 15.0
 wheel.speed = wheel.defaultSpeed
-wheel.speedDecay = .98
+wheel.speedDecay = .02
 wheel.speedDecayFast = .5
 
 wheel.wedges = {

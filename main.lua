@@ -5,18 +5,23 @@
 
 function love.load()
 
+  defaultFrameRate = 60
+  showPrizeTimeout = 10
+  showPriceFade = .8
   debugMode = true
+
   gameState = 1
   gameStateTimeout = 10.0
   justSpun = false
   showPrizeTimer = 0
-  showPrizeTimeout = 10
   showPrize = false
   prize = ''
   lastClickedWedge = 0
+  deltaTime = 0
 
-  -- love.window.setMode( 1920, 1080, {fullscreen=true,display=1} )
   love.window.setMode( love.graphics.getWidth(), love.graphics.getHeight(), {fullscreen=true,display=1} )
+  -- love.window.setMode( love.graphics.getWidth(), love.graphics.getHeight(), {fullscreen=true,display=2} )
+  love.window.setTitle( 'Happily Wheel of Fortune' )
 
   require('./wheel')
 
@@ -37,8 +42,10 @@ function love.load()
 end
 
 function love.update(dt)
+  deltaTime = dt
+
   -- clicking sound
-  click()
+  makeClickingSound()
 
   -- boxblur
   -- effect.boxblur.radius = {wheel.speed*15,wheel.speed*15}
@@ -47,12 +54,12 @@ function love.update(dt)
   if wheel.rotation > (math.pi*2) then
     wheel.rotation = math.fmod(wheel.rotation, (math.pi*2)) -- modulus operation
   end
-  wheel.rotation = wheel.rotation + wheel.speed
+  wheel.rotation = wheel.rotation + ((dt * defaultFrameRate) * wheel.speed)
 
   -- if game is in session
   if gameState == 2 then
     if love.mouse.isDown(1) then
-      if wheel.speed <= 0.1 then
+      if wheel.speed <= wheel.addJumpStartSpeed then
         wheel.speed = math.random(3,5)/10
         justSpun = true
       end
@@ -64,19 +71,18 @@ function love.update(dt)
       wheel.speed = wheel.speed * wheel.acceleration
     else
       wheel.acceleration = wheel.defaultAcceleration
-      if wheel.speed > 0.00002 then
+      if wheel.speed > wheel.cutOffSpeed then
+        local decayRate = 0
         if wheel.speed > wheel.maxSpeed then
-          wheel.speed = wheel.speed * wheel.speedDecayFast
+          decayRate = wheel.speedDecayFast
         else
-          wheel.speed = wheel.speed * wheel.speedDecay
+          decayRate = wheel.speedDecay
         end
+        wheel.speed = wheel.speed - ((dt * defaultFrameRate) * (wheel.speed * decayRate))
       else
         wheel.speed = wheel.defaultSpeed
         if justSpun then
           gameState = 3
-          -- sounds.congrats:play()
-          -- determinePrize(radToDeg(wheel.rotation))
-          -- justSpun = false
         end
       end
     end
@@ -100,17 +106,25 @@ end -- end love.update
 
 function love.draw()
   love.graphics.draw(bg[1], 0, 0, (3*math.pi)/2, love.graphics.getWidth()/bg[1]:getHeight(), nil, bg[1]:getWidth(), nil) -- shadow
-  love.graphics.draw(sprites.wheel, wheel.x, wheel.y, wheel.rotation, love.graphics.getWidth()/sprites.wheel:getHeight(), nil, sprites.wheel:getWidth()/2, sprites.wheel:getWidth()/2)
+  love.graphics.draw(sprites.wheel, wheel.x, wheel.y, wheel.rotation, love.graphics.getWidth()/sprites.wheel:getHeight(), nil, sprites.wheel:getWidth()/2, sprites.wheel:getWidth()/2) -- wheel
   love.graphics.draw(bg[2], 0, 0, (3*math.pi)/2, love.graphics.getWidth()/bg[2]:getHeight(), nil, bg[2]:getWidth(), nil) -- background
-  love.graphics.draw(bg[3], 0, love.graphics.getHeight(), (3*math.pi)/2, love.graphics.getWidth()/sprites.wheel:getWidth(), nil)
+  love.graphics.draw(bg[3], 0, love.graphics.getHeight(), (3*math.pi)/2, love.graphics.getWidth()/sprites.wheel:getWidth(), nil) -- wheel hub
+
+  -- show price state
+  if gameState == 3 then
+    love.graphics.setColor(0,0,0,showPriceFade)
+    love.graphics.rectangle('fill', 0, 0, love.graphics.getWidth(), love.graphics.getHeight())
+    love.graphics.setColor(255,255,255,1)
+  end
 
   -- debug messages
   if debugMode then
     love.graphics.print('Speed: ' ..wheel.speed)
-    love.graphics.print('Acc: ' ..wheel.acceleration, 0, 20)
-    love.graphics.print('Rotation: ' ..wheel.rotation, 0, 40)
+    love.graphics.print('Rotation: ' ..wheel.rotation, 0, 20)
+    love.graphics.print('Acc: ' ..wheel.acceleration, 0, 40)
     love.graphics.print('Prize: ' ..prize, 300, 0)
     love.graphics.print('Show prize timer: ' ..showPrizeTimer, 600, 0)
+    love.graphics.print('DT: ' ..deltaTime, 600, 20)
   end
 end
 
@@ -169,7 +183,7 @@ function loadClickingSound()
   return clicks
 end
 
-function click()
+function makeClickingSound()
   if (wheel.speed > 0) and (wheel.speed < 0.2) then
     local deg = radToDeg(wheel.rotation)
     local lastPrizeDeg = 0
