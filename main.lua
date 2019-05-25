@@ -7,7 +7,7 @@ function love.load()
 
   defaultFrameRate = 60
   showPrizeTimeout = 10
-  showPriceFade = .8
+  showPriceFade = .5
   debugMode = true
 
   gameState = 1
