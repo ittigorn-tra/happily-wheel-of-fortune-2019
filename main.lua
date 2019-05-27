@@ -8,13 +8,15 @@ function love.load()
   showPrizeTimeout = 10
   showPriceFade = .6
   debugMode = false
-  display = 1
+  display = 2
   defaultBgMusicVolume = 1.0
   dimmedBgMusicVolume  = .4
+  spinLockTimeout = 1.5
 
   gameState = 1
   gameStateTimeout = 10.0
   justSpun = false
+  spinLockTimer = 0
   showPrizeTimer = 0
   showPrize = false
   prizeKey = ''
@@ -28,7 +30,7 @@ function love.load()
   require('./prizes')
 
   if debugMode then
-    wheel.speedDecay = .5
+    -- wheel.speedDecay = .5
   end
 
   -- graphics
@@ -71,7 +73,8 @@ function love.update(dt)
 
   -- if game is in session
   if gameState == 2 then
-    if love.mouse.isDown(1) then
+    if love.mouse.isDown(1) and (spinLockTimer < spinLockTimeout) then
+      spinLockTimer = 0
       if wheel.speed <= wheel.addJumpStartSpeed then
         wheel.speed = math.random(3,5)/10
         justSpun = true
@@ -83,6 +86,7 @@ function love.update(dt)
       end
       wheel.speed = wheel.speed * wheel.acceleration
     else
+      spinLockTimer = spinLockTimer + dt
       wheel.acceleration = wheel.defaultAcceleration
       if wheel.speed > wheel.cutOffSpeed then
         local decayRate = 0
@@ -144,6 +148,7 @@ function love.draw()
     love.graphics.print('Speed: ' ..wheel.speed)
     love.graphics.print('Rotation: ' ..wheel.rotation, 0, 20)
     love.graphics.print('Acc: ' ..wheel.acceleration, 0, 40)
+    love.graphics.print('Spin Lock Timer: ' ..spinLockTimer, 0, 60)
     love.graphics.print('Prize: ' ..prizeKey, 300, 0)
     love.graphics.print('Show prize timer: ' ..showPrizeTimer, 600, 0)
     love.graphics.print('DT: ' ..deltaTime, 600, 20)
@@ -184,6 +189,7 @@ function resetState()
   showPrizeTimer = 0
   showPrize = false
   prizeKey = ''
+  spinLockTimer = 0
 end
 
 function startGame()
