@@ -15,7 +15,7 @@ function love.load()
   justSpun = false
   showPrizeTimer = 0
   showPrize = false
-  prize = ''
+  prizeKey = ''
   lastClickedWedge = 0
   deltaTime = 0
 
@@ -122,7 +122,7 @@ function love.draw()
     love.graphics.print('Speed: ' ..wheel.speed)
     love.graphics.print('Rotation: ' ..wheel.rotation, 0, 20)
     love.graphics.print('Acc: ' ..wheel.acceleration, 0, 40)
-    love.graphics.print('Prize: ' ..prize, 300, 0)
+    love.graphics.print('Prize: ' ..prizeKey, 300, 0)
     love.graphics.print('Show prize timer: ' ..showPrizeTimer, 600, 0)
     love.graphics.print('DT: ' ..deltaTime, 600, 20)
   end
@@ -150,7 +150,7 @@ function determinePrize(deg)
   lastPrizeDeg = 0
   for i, w in ipairs(wheel.wedges) do
     if deg > lastPrizeDeg and deg <= w.stop then
-      prize = w.prizeKey
+      prizeKey = w.prizeKey
       break
     end
     lastPrizeDeg = w.stop
@@ -161,7 +161,7 @@ function resetState()
   wheel.speed = 0
   showPrizeTimer = 0
   showPrize = false
-  prize = ''
+  prizeKey = ''
 end
 
 function startGame()
