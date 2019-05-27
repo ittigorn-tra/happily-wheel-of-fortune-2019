@@ -7,8 +7,9 @@ function love.load()
 
   defaultFrameRate = 60
   showPrizeTimeout = 10
-  showPriceFade = .5
+  showPriceFade = .6
   debugMode = true
+  display = 2
 
   gameState = 1
   gameStateTimeout = 10.0
@@ -19,11 +20,15 @@ function love.load()
   lastClickedWedge = 0
   deltaTime = 0
 
-  love.window.setMode( love.graphics.getWidth(), love.graphics.getHeight(), {fullscreen=true,display=1} )
-  -- love.window.setMode( love.graphics.getWidth(), love.graphics.getHeight(), {fullscreen=true,display=2} )
+  love.window.setMode( love.graphics.getWidth(), love.graphics.getHeight(), {fullscreen=true,display=display} )
   love.window.setTitle( 'Happily Wheel of Fortune' )
 
   require('./wheel')
+  require('./prizes')
+
+  if debugMode then
+    wheel.speedDecay = .7
+  end
 
   -- graphics
   bg = {}
@@ -36,7 +41,6 @@ function love.load()
 
   -- sounds
   sounds = {}
-  sounds.congrats = love.audio.newSource("sounds/51.wav", "static")
   sounds.clicks = loadClickingSound()
   
 end
@@ -90,8 +94,12 @@ function love.update(dt)
   elseif gameState == 3 then
     showPrizeTimer = showPrizeTimer + dt
     if justSpun then
-      sounds.congrats:play()
       determinePrize(radToDeg(wheel.rotation))
+      if not (prizeKey == '') then
+        if not (prizes[prizeKey].sound == nil) then
+          prizes[prizeKey].sound:play()
+        end
+      end
       showPrize = true
       justSpun = false
     elseif showPrizeTimer >= showPrizeTimeout then
@@ -115,6 +123,11 @@ function love.draw()
     love.graphics.setColor(0,0,0,showPriceFade)
     love.graphics.rectangle('fill', 0, 0, love.graphics.getWidth(), love.graphics.getHeight())
     love.graphics.setColor(255,255,255,1)
+    if not (prizeKey == '') then
+      if not (prizes[prizeKey].sprite == nil) then
+        love.graphics.draw(prizes[prizeKey].sprite, love.graphics.getWidth()/2, love.graphics.getHeight()/2, (3*math.pi)/2, (love.graphics.getHeight()*.8)/prizes[prizeKey].sprite:getWidth(), nil, prizes[prizeKey].sprite:getWidth()/2, prizes[prizeKey].sprite:getHeight()/2) -- prize
+      end
+    end
   end
 
   -- debug messages

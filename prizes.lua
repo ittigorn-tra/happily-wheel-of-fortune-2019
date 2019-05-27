@@ -1,11 +1,13 @@
+local congrats = love.audio.newSource("sounds/51.wav", "stream")
+local blank = nil
 prizes = {
-  softcover   = { name='สมุดปกอ่อน', sprite = nil },
-  hardcover   = { name='สมุดปกแข็ง', sprite = nil },
-  sketch1     = { name='Sketchbook', sprite = nil },
-  sketch2     = { name='Sketchbook Large', sprite = nil },
-  sketchSet1  = { name='Sketchbook Rainbow Set', sprite = nil },
-  sketchSet2  = { name='Sketchbook Summer Set', sprite = nil },
-  pen         = { name='ปากกา', sprite = nil },
-  shirt       = { name='Happily T-shirt Black / White', sprite = nil },
-  blank       = { name='Blank', sprite = nil },
+  softcover   = { sound = congrats, sprite = love.graphics.newImage('sprites/prizes/placeholder.png'), name='สมุดปกอ่อน' },
+  hardcover   = { sound = congrats, sprite = love.graphics.newImage('sprites/prizes/placeholder.png'), name='สมุดปกแข็ง' },
+  sketch1     = { sound = congrats, sprite = love.graphics.newImage('sprites/prizes/placeholder.png'), name='Sketchbook' },
+  sketch2     = { sound = congrats, sprite = love.graphics.newImage('sprites/prizes/placeholder.png'), name='Sketchbook Large' },
+  sketchSet1  = { sound = congrats, sprite = love.graphics.newImage('sprites/prizes/placeholder.png'), name='Sketchbook Rainbow Set' },
+  sketchSet2  = { sound = congrats, sprite = love.graphics.newImage('sprites/prizes/placeholder.png'), name='Sketchbook Summer Set' },
+  pen         = { sound = congrats, sprite = love.graphics.newImage('sprites/prizes/placeholder.png'), name='ปากกา' },
+  shirt       = { sound = congrats, sprite = love.graphics.newImage('sprites/prizes/placeholder.png'), name='Happily T-shirt Black / White' },
+  blank       = { sound = blank,    sprite = love.graphics.newImage('sprites/prizes/placeholder.png'), name='Blank' },
 }
