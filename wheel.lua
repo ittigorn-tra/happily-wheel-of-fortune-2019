@@ -3,6 +3,7 @@ require('./prizes')
 wheel = {}
 wheel.x = love.graphics.getWidth()/2
 wheel.y = love.graphics.getHeight()
+wheel.centerOffsetX = 1
 wheel.rotation = 0
 wheel.defaultAcceleration = 1
 wheel.acceleration = wheel.defaultAcceleration
@@ -16,27 +17,27 @@ wheel.speedDecay = .02
 wheel.speedDecayFast = .5
 
 wheel.wedges = {
-  { stop = 18.0, prizeKey = 'sketch2' },
-  { stop = 36.0, prizeKey = 'sketchSet1' },
+  { stop = 18.2, prizeKey = 'sketch2' },
+  { stop = 36.1, prizeKey = 'sketchSet1' },
   { stop = 54.0, prizeKey = 'pen' },
   { stop = 72.0, prizeKey = 'sketch1' },
-  { stop = 90.0, prizeKey = 'hardcover' },
+  { stop = 90.3, prizeKey = 'hardcover' },
 
-  { stop = 105.0, prizeKey = 'sketch1' },
-  { stop = 119.5, prizeKey = 'sketch2' },
-  { stop = 134.9, prizeKey = 'sketch1' },
-  { stop = 150.0, prizeKey = 'pen' },
-  { stop = 164.6, prizeKey = 'softcover' },
+  { stop = 108.3, prizeKey = 'sketch1' },
+  { stop = 126.1, prizeKey = 'sketch2' },
+  { stop = 144.0, prizeKey = 'sketch1' },
+  { stop = 162.1, prizeKey = 'pen' },
+  { stop = 180.0, prizeKey = 'softcover' },
 
-  { stop = 195.0, prizeKey = 'sketch1' },
-  { stop = 209.6, prizeKey = 'sketchSet2' },
-  { stop = 225.0, prizeKey = 'pen' },
-  { stop = 240.1, prizeKey = 'hardcover' },
-  { stop = 254.6, prizeKey = 'sketch2' },
+  { stop = 198.1, prizeKey = 'sketch1' },
+  { stop = 216.0, prizeKey = 'sketchSet2' },
+  { stop = 233.8, prizeKey = 'pen' },
+  { stop = 251.7, prizeKey = 'hardcover' },
+  { stop = 270.0, prizeKey = 'sketch2' },
 
-  { stop = 284.9, prizeKey = 'sketch1' },
-  { stop = 299.6, prizeKey = 'shirt' },
-  { stop = 315.0, prizeKey = 'blank' },
-  { stop = 330.0, prizeKey = 'softcover' },
-  { stop = 344.5, prizeKey = 'sketch1' },
+  { stop = 287.9, prizeKey = 'sketch1' },
+  { stop = 305.8, prizeKey = 'shirt' },
+  { stop = 323.8, prizeKey = 'blank' },
+  { stop = 342.0, prizeKey = 'softcover' },
+  { stop = 360.0, prizeKey = 'sketch1' }
 }

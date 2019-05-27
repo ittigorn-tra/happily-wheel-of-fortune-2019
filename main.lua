@@ -106,7 +106,7 @@ end -- end love.update
 
 function love.draw()
   love.graphics.draw(bg[1], 0, 0, (3*math.pi)/2, love.graphics.getWidth()/bg[1]:getHeight(), nil, bg[1]:getWidth(), nil) -- shadow
-  love.graphics.draw(sprites.wheel, wheel.x, wheel.y, wheel.rotation, love.graphics.getWidth()/sprites.wheel:getHeight(), nil, sprites.wheel:getWidth()/2, sprites.wheel:getWidth()/2) -- wheel
+  love.graphics.draw(sprites.wheel, wheel.x, wheel.y, wheel.rotation, love.graphics.getWidth()/sprites.wheel:getHeight(), nil, (sprites.wheel:getWidth()/2)+wheel.centerOffsetX, sprites.wheel:getWidth()/2) -- wheel
   love.graphics.draw(bg[2], 0, 0, (3*math.pi)/2, love.graphics.getWidth()/bg[2]:getHeight(), nil, bg[2]:getWidth(), nil) -- background
   love.graphics.draw(bg[3], 0, love.graphics.getHeight(), (3*math.pi)/2, love.graphics.getWidth()/sprites.wheel:getWidth(), nil) -- wheel hub
 
