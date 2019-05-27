@@ -21,7 +21,7 @@ wheel.wedges = {
   { stop = 36.1, prizeKey = 'sketchSet1' },
   { stop = 54.0, prizeKey = 'pen' },
   { stop = 72.0, prizeKey = 'sketch1' },
-  { stop = 90.3, prizeKey = 'hardcover' },
+  { stop = 90.3, prizeKey = 'blank' },
 
   { stop = 108.3, prizeKey = 'sketch1' },
   { stop = 126.1, prizeKey = 'sketch2' },
@@ -31,7 +31,7 @@ wheel.wedges = {
 
   { stop = 198.1, prizeKey = 'sketch1' },
   { stop = 216.0, prizeKey = 'sketchSet2' },
-  { stop = 233.8, prizeKey = 'pen' },
+  { stop = 233.8, prizeKey = 'blank' },
   { stop = 251.7, prizeKey = 'hardcover' },
   { stop = 270.0, prizeKey = 'sketch2' },
 

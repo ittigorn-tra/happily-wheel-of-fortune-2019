@@ -1,7 +1,6 @@
 -- ESC to exit game
--- HOME to enter idle mode or idle for 10 seconds
--- ENTER to start
--- SPACEBAR to spin
+-- HOME to enter idle mode or idle for 10 seconds after spinning
+-- LEFT CLICK to spin
 
 function love.load()
 
