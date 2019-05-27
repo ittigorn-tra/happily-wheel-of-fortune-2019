@@ -8,8 +8,10 @@ function love.load()
   defaultFrameRate = 60
   showPrizeTimeout = 10
   showPriceFade = .6
-  debugMode = true
-  display = 2
+  debugMode = false
+  display = 1
+  defaultBgMusicVolume = 1.0
+  dimmedBgMusicVolume  = .4
 
   gameState = 1
   gameStateTimeout = 10.0
@@ -27,13 +29,13 @@ function love.load()
   require('./prizes')
 
   if debugMode then
-    wheel.speedDecay = .7
+    wheel.speedDecay = .5
   end
 
   -- graphics
   bg = {}
   table.insert(bg, love.graphics.newImage('sprites/shadow.png'))
-  table.insert(bg, love.graphics.newImage('sprites/bg.png'))
+  table.insert(bg, love.graphics.newImage('sprites/cover.png'))
   table.insert(bg, love.graphics.newImage('sprites/wheel-hub.png'))
 
   sprites = {}
@@ -42,6 +44,9 @@ function love.load()
   -- sounds
   sounds = {}
   sounds.clicks = loadClickingSound()
+  bgMusic = love.audio.newSource( 'sounds/soundtrack.mp3', 'stream' )
+  bgMusic:setLooping( true )
+  bgMusic:play()
   
 end
 
@@ -51,8 +56,13 @@ function love.update(dt)
   -- clicking sound
   makeClickingSound()
 
-  -- boxblur
-  -- effect.boxblur.radius = {wheel.speed*15,wheel.speed*15}
+  -- gradualy increase volume in idle state
+  if gameState == 1 then
+    local curentBgVolume = bgMusic:getVolume()
+    if curentBgVolume < defaultBgMusicVolume then
+      bgMusic:setVolume(curentBgVolume + .005)
+    end
+  end
 
   -- update rotation calculation
   if wheel.rotation > (math.pi*2) then
@@ -179,6 +189,7 @@ end
 
 function startGame()
   gameState = 2
+  bgMusic:setVolume(dimmedBgMusicVolume)
   resetState()
 end
 
@@ -189,7 +200,7 @@ end
 
 function loadClickingSound()
   local clicks = {}
-  table.insert(clicks, love.audio.newSource("sounds/IR-sweep.wav", "static"))
+  table.insert(clicks, love.audio.newSource("sounds/click.wav", "static"))
   for i = 1, 30, 1 do
     table.insert(clicks, clicks[1]:clone())
   end
