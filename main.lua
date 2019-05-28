@@ -8,7 +8,7 @@ function love.load()
   showPrizeTimeout = 10
   showPriceFade = .6
   debugMode = false
-  display = 2
+  display = 1
   defaultBgMusicVolume = 1.0
   dimmedBgMusicVolume  = .4
   spinLockTimeout = 1.5

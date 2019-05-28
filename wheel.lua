@@ -17,16 +17,16 @@ wheel.speedDecay = .02
 wheel.speedDecayFast = .5
 
 wheel.wedges = {
-  { stop = 18.2, prizeKey = 'sketch2' },
-  { stop = 36.1, prizeKey = 'sketchSet1' },
-  { stop = 54.0, prizeKey = 'pen' },
+  { stop = 18.2, prizeKey = 'blank' },
+  { stop = 36.1, prizeKey = 'sketch2' },
+  { stop = 54.0, prizeKey = 'sketchSet1' },
   { stop = 72.0, prizeKey = 'sketch1' },
   { stop = 90.3, prizeKey = 'blank' },
 
   { stop = 108.3, prizeKey = 'sketch1' },
   { stop = 126.1, prizeKey = 'sketch2' },
   { stop = 144.0, prizeKey = 'sketch1' },
-  { stop = 162.1, prizeKey = 'pen' },
+  { stop = 162.1, prizeKey = 'blank' },
   { stop = 180.0, prizeKey = 'softcover' },
 
   { stop = 198.1, prizeKey = 'sketch1' },
@@ -35,9 +35,9 @@ wheel.wedges = {
   { stop = 251.7, prizeKey = 'hardcover' },
   { stop = 270.0, prizeKey = 'sketch2' },
 
-  { stop = 287.9, prizeKey = 'sketch1' },
-  { stop = 305.8, prizeKey = 'shirt' },
-  { stop = 323.8, prizeKey = 'blank' },
+  { stop = 293.7, prizeKey = 'sketch1' },
+  { stop = 299.3, prizeKey = 'shirt' },
+  { stop = 323.9, prizeKey = 'blank' },
   { stop = 342.0, prizeKey = 'softcover' },
   { stop = 360.0, prizeKey = 'sketch1' }
 }
