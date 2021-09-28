@@ -76,13 +76,13 @@ Find out more about Happily app at [happily.ai](https://www.happily.ai/)
 
 ## Previews
 
-&lt;p>
+<p>
 
-&lt;img src="https://github.com/ittigorn-tra/happily-wheel-of-fortune-2019/blob/master/resources/PMAT2019-1.jpg" width="305px" height="540px">
+<img src="https://github.com/ittigorn-tra/happily-wheel-of-fortune-2019/blob/master/resources/PMAT2019-1.jpg" width="305px" height="540px">
 
-&lt;img src="https://github.com/ittigorn-tra/happily-wheel-of-fortune-2019/blob/master/resources/PMAT2019-2.jpg" width="305px" height="540px">
+<img src="https://github.com/ittigorn-tra/happily-wheel-of-fortune-2019/blob/master/resources/PMAT2019-2.jpg" width="305px" height="540px">
 
-&lt;/p>
+</p>
 
 
 ## Miscellaneous
