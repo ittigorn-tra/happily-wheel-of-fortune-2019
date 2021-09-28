@@ -1,7 +1,7 @@
 <!-----
 NEW: Check the "Suppress top comment" option to remove this info from the output.
 
-Conversion time: 0.639 seconds.
+Conversion time: 0.551 seconds.
 
 
 Using this Markdown file:
@@ -14,7 +14,7 @@ Using this Markdown file:
 Conversion notes:
 
 * Docs to Markdown version 1.0β31
-* Mon Sep 27 2021 21:01:05 GMT-0700 (PDT)
+* Mon Sep 27 2021 22:57:35 GMT-0700 (PDT)
 * Source doc: Happily Wheel of Fortune 2019 README
 ----->
 
@@ -78,9 +78,17 @@ Find out more about Happily app at [happily.ai](https://www.happily.ai/)
 
 <p>
 
-<img src="https://github.com/ittigorn-tra/happily-wheel-of-fortune-2019/blob/master/resources/PMAT2019-1.jpg" width="370px" height="493px">
+<img src="https://github.com/ittigorn-tra/happily-wheel-of-fortune-2019/blob/master/resources/preview_images/preview1.jpg" width="351px" height="624px">
 
-<img src="https://github.com/ittigorn-tra/happily-wheel-of-fortune-2019/blob/master/resources/PMAT2019-2.jpg" width="370px" height="493px">
+<img src="https://github.com/ittigorn-tra/happily-wheel-of-fortune-2019/blob/master/resources/preview_images/preview2.jpg" width="351px" height="624px">
+
+</p>
+
+<p>
+
+<img src="https://github.com/ittigorn-tra/happily-wheel-of-fortune-2019/blob/master/resources/PMAT2019-1.jpg" width="305px" height="540px">
+
+<img src="https://github.com/ittigorn-tra/happily-wheel-of-fortune-2019/blob/master/resources/PMAT2019-2.jpg" width="305px" height="540px">
 
 </p>
 
