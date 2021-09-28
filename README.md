@@ -78,9 +78,9 @@ Find out more about Happily app at [happily.ai](https://www.happily.ai/)
 
 <p>
 
-<img src="https://github.com/ittigorn-tra/happily-wheel-of-fortune-2019/blob/master/resources/preview_images/preview1.jpg" width="351px" height="624px">
+<img src="https://github.com/ittigorn-tra/happily-wheel-of-fortune-2019/blob/master/resources/preview_images/preview1.png" width="351px" height="624px">
 
-<img src="https://github.com/ittigorn-tra/happily-wheel-of-fortune-2019/blob/master/resources/preview_images/preview2.jpg" width="351px" height="624px">
+<img src="https://github.com/ittigorn-tra/happily-wheel-of-fortune-2019/blob/master/resources/preview_images/preview2.png" width="351px" height="624px">
 
 </p>
 
